@@ -2,14 +2,14 @@
 
 const botconfig = require("./botconfig.json");
 const Discord = require("discord.js");
-const bot = new Discord.Client({disableEveryone: true});
+const bot = new Discord.Client({ disableEveryone: true });
 
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online`)
     bot.user.setStatus("Life...")
 });
 
-bot.on("message", function(message) {
+bot.on("message", function (message) {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
 
@@ -19,17 +19,17 @@ bot.on("message", function(message) {
     let args = messageArray.slice(1);
 
     if (cmd === `${prefix}hello`) {
-       
+
         return message.channel.send("Hello");
-    
+
     }
 
     if (cmd === `${prefix}botinfo`) {
         let botembed = new Discord.RichEmbed()
-        .setDescription("Bot Information")
-        .setColor("#3e18f2")
-        .addField("Bot Name",bot.user.username)
-        .setTitle("Bot Info");
+            .setDescription("Bot Information")
+            .setColor("#3e18f2")
+            .addField("Bot Name", bot.user.username)
+            .setTitle("Bot Info");
 
         return message.channel.send(botembed);
     }
@@ -42,20 +42,20 @@ bot.on("message", function(message) {
         let reason = args.join(" ").slice(22);
 
         let reportEmbed = new Discord.RichEmbed()
-        .setDescription("Reports")
-        .setColor("#3e18f2")
-        .addField("Reported User", `${rUser} with ID ${rUser.id}`)
-        .addField("Reported By", `${message.author} with ID: ${message.author.id}`)
-        .addField("Channel", message.channel)
-        .addField("Time", `${message.channel.createdAt}`)
-        .addField("Reason", reason);
+            .setDescription("Reports")
+            .setColor("#3e18f2")
+            .addField("Reported User", `${rUser} with ID ${rUser.id}`)
+            .addField("Reported By", `${message.author} with ID: ${message.author.id}`)
+            .addField("Channel", message.channel)
+            .addField("Time", `${message.channel.createdAt}`)
+            .addField("Reason", reason);
 
         let reportChannel = message.guild.channels.find(`name`, "reports");
-        if(!reportChannel) {
+        if (!reportChannel) {
             let makeChannel = new Discord.Guild();
             makeChannel.createChannel("reports", `text`)
-            .then(console.log)
-            .catch(console.error);
+                .then(console.log)
+                .catch(console.error);
 
         }
         if (rUser.hasPermission(`MANAGE_ROLES_OR_PERMISSIONS`)) {
@@ -71,19 +71,19 @@ bot.on("message", function(message) {
         let suggestion = args.join(" ");
         let suggestionChannel = message.guild.channels.find(`name`, "suggestions");
         let suggestEmbedAvatar = new Discord.RichEmbed()
-        .setColor("#3e98f2")
-        .setAuthor(`${message.author.username}`)
-        .setThumbnail(`${message.author.avatarURL}`)
-        .addField("Suggestion",suggestion);
+            .setColor("#3e98f2")
+            .setAuthor(`${message.author.username}`)
+            .setThumbnail(`${message.author.avatarURL}`)
+            .addField("Suggestion", suggestion);
 
         let suggestEmbedNoAvatar = new Discord.RichEmbed()
-        .setColor("#3e18f2")
-        .setAuthor(`${message.author.username}`)
-        .addField("Suggestion",suggestion);
+            .setColor("#3e18f2")
+            .setAuthor(`${message.author.username}`)
+            .addField("Suggestion", suggestion);
 
         if (message.author.avatarURL) {
-        suggestionChannel.send(suggestEmbedAvatar);
-        message.delete();
+            suggestionChannel.send(suggestEmbedAvatar);
+            message.delete();
         }
         if (message.author.avatarURL === null) {
             suggestionChannel.send(suggestEmbedNoAvatar);
@@ -92,17 +92,17 @@ bot.on("message", function(message) {
     }
 
     if (cmd === `${prefix}purge`) {
-        
+
         let messagecount = parseInt(args);
-if (message.member.hasPermission(`ADMINISTRATOR`)) {
-  message.channel.fetchMessages({limit: messagecount}).then(messages => message.channel.bulkDelete(messages));
-}
+        if (message.member.hasPermission(`ADMINISTRATOR`)) {
+            message.channel.fetchMessages({ limit: messagecount }).then(messages => message.channel.bulkDelete(messages));
+        }
     }
-    if (cmd  === `${prefix}announce`) {
+    if (cmd === `${prefix}announce`) {
         if (message.member.hasPermission("ADMINISTRATOR")) {
-        let announcement = args.join(" ");
-        let announcementChannel = message.guild.channels.find(`name`, "announcements");
-        let announceEmbed = new Discord.RichEmbed()
+            let announcement = args.join(" ");
+            let announcementChannel = message.guild.channels.find(`name`, "announcements");
+            let announceEmbed = new Discord.RichEmbed()
                 .setAuthor(message.author.username)
                 .setColor("#3e98f2")
                 .addField("Announcement", announcement)
