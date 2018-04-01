@@ -66,22 +66,7 @@ bot.on("message", function(message) {
         message.delete();
 
     }
-//TODO: Finish tempmute command
-    if (cmd === `${prefix}tempmute` ) {
-        let tpUser = message.guild.memebers(message.guild.users.first()) || message.guild.members.get(args[0]);
-        if (!tpUser) {
-            message.reply("User not found!");
-        }
-        if (tpUser.hasPermission("MANAGE_MESSAGES")){
-            message.reply("Cannot mute this user!");
-       }
-        let tpReason = message.guild.get(args[1]);
-        let mutedRole = message.guild.roles.find(`name`, "Muted");
-        if (!mutedRole) {
-            let makeRole = new Discord.Guild();
-            makeRole.createRole("Muted");
-        }
-    }
+
     if (cmd === `${prefix}suggest`) {
         let suggestion = args.join(" ");
         let suggestionChannel = message.guild.channels.find(`name`, "suggestions");
