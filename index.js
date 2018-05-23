@@ -5,7 +5,7 @@ const fs = require("fs");
 
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online`)
-    bot.user.setActivity("something", `${"STREAMING"}`);
+    bot.user.setActivity("something", `${'STREAMING'}`);
 });
 
 bot.on("message", function (message) {
